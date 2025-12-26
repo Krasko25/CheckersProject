@@ -14,9 +14,12 @@ public:
     CheckerType GetType() const { return type; }
     CheckerColor GetColor() const { return color; }
     
-    void PromoteToKing() { type = CheckerType::King; }
+    // Встраивание метода (метод PromoteToKing встроен в SetType)
+    void SetType(CheckerType newType) { type = newType; }
     
+    // Замена временной переменной (переменные isKing, isWhite, isBlack удалены)
     bool IsKing() const { return type == CheckerType::King; }
-    bool IsWhite() const { return color == CheckerColor::White; }
-    bool IsBlack() const { return color == CheckerColor::Black; }
+    
+    // Встраивание метода (методы IsWhite/IsBlack встроены в проверки)
+    bool IsColor(CheckerColor checkColor) const { return color == checkColor; }
 };
