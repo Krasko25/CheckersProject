@@ -1,5 +1,3 @@
-// какие то изменения
-
 #pragma once
 #include <string>
 #include <chrono>
@@ -16,8 +14,12 @@ private:
     int draws;
     DateTime createdDate;
 
+    // Декомпозиция условного оператора - выделяем проверку имени
+    bool IsNameValid(const std::string& name) const;
+
 public:
-    Player(int id, const std::string& name, const std::string& avatarPath = "");
+    Player(int id, const std::string& name, const std::string& avatarPath = "", 
+           DateTime createdDate = std::chrono::system_clock::now());
     ~Player() = default;
     
     int GetId() const { return id; }
@@ -30,9 +32,10 @@ public:
     
     void SetName(const std::string& newName);
     void SetAvatarPath(const std::string& newPath);
-    // методы изменения статистики
-    void AddWin() { wins++; }
-    void AddLoss() { losses++; }
-    void AddDraw() { draws++; }
+    
+    void UpdateStats(bool win, bool loss, bool draw);
     
     int GetTotalGames() const { return wins + losses + draws; }
+    
+    double CalculateWinRate() const;
+};

@@ -14,14 +14,17 @@ class Board {
 private:
     std::array<std::array<Checker*, 8>, 8> grid;
     
-    // замена временной переменной (valid заменена на выражение)
     bool IsValidPosition(int x, int y) const;
     
-    // Встраивание метода (CanCaptureFrom встроен в GetPossibleMovesForChecker)
+    //декомпозиция условного оператора, разделяем логику
     std::vector<Move> GetPossibleMovesForChecker(int x, int y) const;
+    std::vector<Move> GetCaptureMoves(int x, int y) const;
+    std::vector<Move> GetRegularMoves(int x, int y) const;
     
-    // Добавление параметра метода (добавлен параметр validateMove)
     bool ExecuteMove(int fromX, int fromY, int toX, int toY, bool validateMove = true);
+
+    // консолидация условного выражения
+    bool IsMoveWithinBoard(int fromX, int fromY, int toX, int toY) const;
 
 public:
     Board();
@@ -41,6 +44,5 @@ public:
     CheckerColor GetWinner() const;
     bool HasLegalMoves(CheckerColor color) const;
     
-    // Выделение метода
     std::vector<Move> GetAllPossibleMoves(CheckerColor color) const;
 };
